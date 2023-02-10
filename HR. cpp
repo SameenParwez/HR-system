@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Enum for request type
+enum RequestType { SUBMIT, APPROVAL };
+
+// Class for Request
+class Request {
+ public:
+  string name;
+  RequestType type;
+  string description;
+  bool approved;
+
+  // Constructor for Request class
+  Request(string n, RequestType t, string d) {
+    name = n;
+    type = t;
+    description = d;
+    approved = false;
+  }
+};
+
+// Function to display request report
+void displayReport(vector<Request> requests) {
+  cout << "Request Report:" << endl;
+  for (int i = 0; i < requests.size(); i++) {
+    cout << "Name: " << requests[i].name << endl;
+    cout << "Type: ";
+    if (requests[i].type == SUBMIT) {
+      cout << "Submit";
+    } else if (requests[i].type == APPROVAL) {
+      cout << "Approval";
+    }
+    cout << endl;
+    cout << "Description: " << requests[i].description << endl;
+    cout << "Approved: " << (requests[i].approved ? "Yes" : "No") << endl;
+    cout << endl;
+  }
+}
+
+int main() {
+  // Vector to store requests
+  vector<Request> requests;
+
+  // Loop to get requests from user
+  while (true) {
+    cout << "Enter request name (Enter 'exit' to quit): ";
+    string name;
+    cin >> name;
+    if (name == "exit") {
+      break;
+    }
+    cout << "Enter request type (0 for Submit, 1 for Approval): ";
+    int type;
+    cin >> type;
+    RequestType requestType = (RequestType) type;
+    cout << "Enter request description: ";
+    string description;
+    cin.ignore();
+    getline(cin, description);
+    requests.push_back(Request(name, requestType, description));
+  }
+
+  // Call function to display request report
+  displayReport(requests);
+
+  return 0;
+}
